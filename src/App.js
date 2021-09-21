@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { useDispatch } from 'react-redux';
 import './App.css';
+import Lobby from './pages/lobby';
+import { addStreams } from './state/actions/streamActions';
 
 function App() {
+  const dispath = useDispatch();
+  const handleCreate = async () =>{
+      let localStream = await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+      const remoteStream = new MediaStream();
+      dispath(addStreams(localStream,remoteStream))
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='container'>
+          <button className='create' onClick={handleCreate}>Create</button>
+          <button className='join'>Join</button>
+      </div>
+      <Lobby></Lobby>
     </div>
   );
 }

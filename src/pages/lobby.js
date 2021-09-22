@@ -24,7 +24,7 @@ const Lobby = () => {
 
   // Global State
   const handleCreate = async () => {
-    let localStream = await navigator.mediaDevices.getUserMedia({
+    let localStream = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       audio: true,
     });

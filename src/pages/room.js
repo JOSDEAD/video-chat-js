@@ -26,15 +26,12 @@ const Room = () => {
       localVideo.current.srcObject = localStream;
       console.log("remoteStream", remoteStream);
       remoteVideo.current.srcObject = remoteStream;
-      pc.addEventListener("track", async (event) => {
-          console.log('entro');
-        remoteStream.addTrack(event.track, remoteStream);
-      });
+
     }
   }, [localStream, remoteStream,pc]);
   return (
     <RoomContainer>
-      <Video reference={localVideo} autoPlay playsInline></Video>
+      <Video reference={localVideo} autoPlay playsInline mute={true}></Video>
       <Video reference={remoteVideo} autoPlay playsInline></Video>
     </RoomContainer>
   );

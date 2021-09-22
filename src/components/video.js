@@ -8,9 +8,9 @@ const StyledVideo=styled.video`
 `
 
 
-const Video = ({reference}) => {
+const Video = ({reference,mute}) => {
     return (
-        <StyledVideo ref={reference} autoPlay playsInline></StyledVideo>
+        <StyledVideo ref={reference} autoPlay playsInline muted={mute}></StyledVideo>
     )
 }
 

@@ -16,7 +16,7 @@ const {firestore} = useContext(FirebaseContext);
       audio: true,
     }).then((stream)=>{
       getRemoteDescription(stream)
-dispath(addStreams(localStream, remoteStream));
+dispath(addStreams(stream, remoteStream));
     }
       );
 

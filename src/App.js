@@ -1,23 +1,24 @@
-import { useDispatch } from 'react-redux';
-import './App.css';
-import Lobby from './pages/lobby';
-import { addStreams } from './state/actions/streamActions';
 
+import "./App.css";
+import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import * as ROUTES from './constants/routes'
+import RTCPeerConnectionContext from "./context/rtcPeer";
 function App() {
-  const dispath = useDispatch();
-  const handleCreate = async () =>{
-      let localStream = await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
-      const remoteStream = new MediaStream();
-      dispath(addStreams(localStream,remoteStream))
-  }
+  const Lobby = lazy(() => import('./pages/lobby'));
+  const Room = lazy(() => import('./pages/room'));
+  const pc = new RTCPeerConnection();
   return (
-    <div className="App">
-      <div className='container'>
-          <button className='create' onClick={handleCreate}>Create</button>
-          <button className='join'>Join</button>
-      </div>
-      <Lobby></Lobby>
-    </div>
+        <Router>
+          <RTCPeerConnectionContext.Provider value={pc}>
+          <Suspense fallback={<p>Loading ...</p>}> 
+          <Switch>
+             <Route path={ROUTES.ROOM} component={Room} />
+             <Route path={ROUTES.LOBBY} component={Lobby} />
+          </Switch>
+          </Suspense>
+          </RTCPeerConnectionContext.Provider>
+        </Router>
   );
 }
 

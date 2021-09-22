@@ -59,18 +59,19 @@ const JoinRoom = ({ children, ...rest }) => {
     };
 
     await callDoc.update({ answer });
+    offerCandidates.onSnapshot((snapshot) => {
+      console.log("entro a offerCandidates join");
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          let data = change.doc.data();
+          console.log("added join candidate", data);
+          pc.addIceCandidate(new RTCIceCandidate(data));
+        }
+      });
+  
+    }
+    );
   };
-
-  offerCandidates.onSnapshot((snapshot) => {
-    console.log("entro a offerCandidates join");
-    snapshot.docChanges().forEach((change) => {
-      if (change.type === "added") {
-        let data = change.doc.data();
-        console.log("added join candidate", data);
-        pc.addIceCandidate(new RTCIceCandidate(data));
-      }
-    });
-  });
   return (
     <Route
       {...rest}

@@ -11,7 +11,7 @@ const {firestore} = useContext(FirebaseContext);
   const dispath = useDispatch();
   const remoteStream = new MediaStream();
   const getVideoStreams = async () => {
-    let localStream = navigator.mediaDevices.getDisplayMedia({
+    let localStream = navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
     }).then((stream)=>{
